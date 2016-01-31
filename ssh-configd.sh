@@ -1,8 +1,5 @@
 #!/bin/bash
 
-CONFIG="~/.ssh/config"
-CONFIGDIR="~/.ssh/config.d"
-
 TOKEN="MANAGED BY SSH-CONFIGD"
 
 function error_exit {
