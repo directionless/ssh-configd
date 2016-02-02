@@ -7,6 +7,13 @@ function error_exit {
     exit 1
 }
 
+function test_ssh_config {
+    # as suggested by Jan
+    # https://twitter.com/jschauma/status/692093938925068288
+    ssh -F "$1" = 2>&1 | grep -q '='
+    return $?
+}
+
 function generate_ssh_config {
     set -e
     cd ~/.ssh
@@ -15,6 +22,7 @@ function generate_ssh_config {
     echo "" >> config.new
     
     cat config.d/*conf >> config.new
+    test_ssh_config config.new || error_exit "Error in generated config"
     cp config config.last
     mv config.new config
     set +e
