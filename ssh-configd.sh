@@ -20,8 +20,14 @@ function generate_ssh_config {
     echo "# $TOKEN" > config.new
     echo "# Generated: $(date)" >> config.new
     echo "" >> config.new
-    
-    cat config.d/*conf >> config.new
+
+    for f in config.d/*conf; do
+	echo "" >> config.new
+	echo "" >> config.new
+	echo "# from $f" >> config.new
+	cat $f >> config.new
+    done
+
     test_ssh_config config.new || error_exit "Error in generated config"
     cp config config.last
     mv config.new config
